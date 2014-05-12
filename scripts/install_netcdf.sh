@@ -91,7 +91,7 @@ rm -rf netcdf_c_build
 rm $netcdf_stdout $netcdf_stderr
 erase_temp_notice
 # See http://www.unidata.ucar.edu/support/help/MailArchives/netcdf/msg11939.html
-export LD_LIBRARY_PATH=$netcdf_install_root/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(eval echo $netcdf_install_root)/lib:$LD_LIBRARY_PATH
 # ------------------------------------------------------------------------------
 # install C++ interface
 notice "--> Install $(add_color 'C++' 'blue bold') interface"
@@ -102,12 +102,11 @@ fi
 mkdir netcdf_cxx_build
 cd netcdf_cxx_build
 $netcdf_cxx_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
-                               CPPFLAGS="-I$netcdf_install_root/include" \
-                               CXXFLAGS="-I$netcdf_install_root/include" \
-                               LDFLAGS="-L$netcdf_install_root/lib" \
-                               CC=$c_compiler \
-                               CXX=$cxx_compiler \
-                               1> "$netcdf_stdout" 2> "$netcdf_stderr"
+    CPPFLAGS="-I$(eval echo $netcdf_install_root)/include" \
+    CXXFLAGS="-I$(eval echo $netcdf_install_root)/include" \
+    LDFLAGS="-L$(eval echo $netcdf_install_root)/lib" \
+    CC=$c_compiler CXX=$cxx_compiler \
+    1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NETCDF C++ interface! See $netcdf_stderr."
     exit 1
@@ -142,13 +141,13 @@ if [[ -d netcdf_fortran_build ]]; then
 fi
 mkdir netcdf_fortran_build
 cd netcdf_fortran_build
-$netcdf_fortran_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
-                                   CPPFLAGS="-I$netcdf_install_root/include" \
-                                   FCFLAGS="-I$netcdf_install_root/include" \
-                                   LDFLAGS="-L$netcdf_install_root/lib" \
-                                   CC=$c_compiler \
-                                   FC=$fortran_compiler \
-                                   1> "$netcdf_stdout" 2> "$netcdf_stderr"
+$netcdf_fortran_src_root/configure \
+    --prefix="$(eval echo $netcdf_install_root)" \
+    CPPFLAGS="-I$(eval echo $netcdf_install_root)/include" \
+    FCFLAGS="-I$(eval echo $netcdf_install_root)/include" \
+    LDFLAGS="-L$(eval echo $netcdf_install_root)/lib" \
+    CC=$c_compiler FC=$fortran_compiler \
+    1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NETCDF Fortran interface! See $netcdf_stderr."
     exit 1
