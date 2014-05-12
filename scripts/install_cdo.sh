@@ -41,7 +41,7 @@ cd cdo_build
 cdo_stdout="$build_root/cdo_stdout"
 cdo_stderr="$build_root/cdo_stderr"
 temp_notice "See $cdo_stdout and $cdo_stderr for output."
-$cdo_src_root/configure --prefix="$cdo_install_root" \
+$cdo_src_root/configure --prefix="$(eval echo $cdo_install_root)" \
                         --with-szlib="$SZIP_ROOT" \
                         --with-hdf5="$HDF5_ROOT" \
                         --with-netcdf="$NETCDF_ROOT" \

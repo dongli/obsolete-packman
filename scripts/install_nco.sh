@@ -42,7 +42,7 @@ NETCDF_LIB="$NETCDF_ROOT/lib" \
 NETCDF4_ROOT="$NETCDF_ROOT" \
 UDUNITS2_PATH="$UDUNITS_ROOT" \
 ANTLR_ROOT="$ANTLR_ROOT" \
-$nco_src_root/configure --prefix="$nco_install_root" \
+$nco_src_root/configure --prefix="$(eval echo $nco_install_root)" \
                         1> "$nco_stdout" 2> "$nco_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NCO! See $nco_stderr."

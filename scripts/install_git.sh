@@ -29,7 +29,8 @@ cd $git_src_root
 git_stdout="$build_root/git_stdout"
 git_stderr="$build_root/git_stderr"
 temp_notice "See $git_stdout and $git_stderr for output."
-./configure --prefix="$git_install_root" CC=gcc 1> "$git_stdout" 2> "$git_stderr"
+./configure --prefix="$(eval echo $git_install_root)" \
+            CC=gcc 1> "$git_stdout" 2> "$git_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure GIT! See $git_stderr."
     exit 1

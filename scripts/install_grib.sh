@@ -19,7 +19,7 @@ grib_url="https://software.ecmwf.int/wiki/download/attachments/3473437/grib_api-
 grib_shasum="9224b8d4d7031c4b2a9b96494834c339b641942d"
 grib_package="grib_api-1.12.1.tar.gz"
 grib_src_root="$build_root/grib_api-1.12.1"
-grib_install_root="$install_root/grib/$fortran_compiler/1.12.1"
+grib_install_root="$install_root/grib/\$fortran_compiler/1.12.1"
 grib_bashrc="$install_root/grib/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -35,7 +35,7 @@ grib_stderr="$build_root/grib_stderr"
 temp_notice "See $grib_stdout and $grib_stderr for output."
 # --disable-shared is needed to avoid link error with JASPER library
 # See https://software.ecmwf.int/issues/browse/SUP-373
-$grib_src_root/configure --prefix="$grib_install_root" \
+$grib_src_root/configure --prefix="$(eval echo $grib_install_root)" \
                          --disable-shared \
                          --with-jasper="$JASPER_ROOT" \
                          --with-netcdf="$NETCDF_ROOT" \

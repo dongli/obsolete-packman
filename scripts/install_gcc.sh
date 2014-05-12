@@ -56,7 +56,7 @@ cd gcc_build
 gcc_stdout="$build_root/gcc_stdout"
 gcc_stderr="$build_root/gcc_stderr"
 temp_notice "See $gcc_stdout and $gcc_stderr for output."
-$gcc_src_root/configure --prefix="$gcc_install_root" \
+$gcc_src_root/configure --prefix="$(eval echo $gcc_install_root)" \
                         1> $gcc_stdout 2> $gcc_stderr
 if [[ $? != 0 ]]; then
     report_error "Failed to configure GCC!"

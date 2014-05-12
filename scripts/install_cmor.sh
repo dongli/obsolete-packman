@@ -20,7 +20,7 @@ cmor_url="https://codeload.github.com/PCMDI/cmor/zip/CMOR-2.9.1"
 cmor_shasum="c614afe629012f197801d3ee0f0a31544823f80e"
 cmor_package="CMOR-2.9.1.zip"
 cmor_src_root="$build_root/cmor-CMOR-2.9.1"
-cmor_install_root="$install_root/cmor/$fortran_compiler/2.9.1"
+cmor_install_root="$install_root/cmor/\$fortran_compiler/2.9.1"
 cmor_bashrc="$install_root/cmor/bashrc"
 # ------------------------------------------------------------------------------
 # unzip package
@@ -34,7 +34,7 @@ cd $cmor_src_root
 cmor_stdout="$build_root/cmor_stdout"
 cmor_stderr="$build_root/cmor_stderr"
 temp_notice "See $cmor_stdout and $cmor_stderr for output."
-$cmor_src_root/configure --prefix="$cmor_install_root" \
+$cmor_src_root/configure --prefix="$(eval echo $cmor_install_root)" \
                          --with-uuid="$UUID_ROOT" \
                          --with-udunits2="$UDUNITS_ROOT" \
                          --with-netcdf="$NETCDF_ROOT" \

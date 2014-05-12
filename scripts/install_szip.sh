@@ -15,7 +15,7 @@ szip_url="http://www.hdfgroup.org/ftp/lib-external/szip/2.1/src/szip-2.1.tar.gz"
 szip_shasum="d241c9acc26426a831765d660b683b853b83c131"
 szip_package="szip-2.1.tar.gz"
 szip_src_root="$build_root/szip-2.1"
-szip_install_root="$install_root/szip/$fortran_compiler/2.1"
+szip_install_root="$install_root/szip/\$fortran_compiler/2.1"
 szip_bashrc="$install_root/szip/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -33,7 +33,9 @@ cd szip_build
 szip_stdout="$build_root/szip_stdout"
 szip_stderr="$build_root/szip_stderr"
 temp_notice "See $szip_stdout and $szip_stderr for output."
-$szip_src_root/configure --prefix="$szip_install_root" 1> "$szip_stdout" 2> "$szip_stderr"
+$szip_src_root/configure --prefix="$(eval echo $szip_install_root)" \
+                         FC=$fortran_compiler \
+                         1> "$szip_stdout" 2> "$szip_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure SZIP! See $szip_stderr."
     exit 1

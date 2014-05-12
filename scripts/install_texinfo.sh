@@ -29,7 +29,7 @@ cd "$texinfo_src_root"
 texinfo_stdout="$build_root/texinfo_stdout"
 texinfo_stderr="$build_root/texinfo_stderr"
 temp_notice "See $texinfo_stdout and $texinfo_stderr for output."
-$texinfo_src_root/configure --prefix="$texinfo_install_root" \
+$texinfo_src_root/configure --prefix="$(eval echo $texinfo_install_root)" \
                             CC=$c_compiler \
                             1> "$texinfo_stdout" 2> "$texinfo_stderr"
 if [[ $? != 0 ]]; then

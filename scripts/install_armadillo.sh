@@ -40,7 +40,7 @@ armadillo_stdout="$build_root/armadillo_stdout"
 armadillo_stderr="$build_root/armadillo_stderr"
 temp_notice "See $armadillo_stdout and $armadillo_stderr for output."
 cmake "$armadillo_src_root" \
-    -DCMAKE_INSTALL_PREFIX="$armadillo_install_root" \
+    -DCMAKE_INSTALL_PREFIX="$(eval echo $armadillo_install_root)" \
     -DCMAKE_BUILD_TYPE="Release" \
     1> "$armadillo_stdout" 2> "$armadillo_stderr"
 if [[ $? != 0 ]]; then

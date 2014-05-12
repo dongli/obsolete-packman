@@ -33,7 +33,7 @@ cd curl_build
 curl_stdout="$build_root/curl_stdout"
 curl_stderr="$build_root/curl_stderr"
 temp_notice "See $curl_stdout and $curl_stderr for output."
-$curl_src_root/configure --prefix="$curl_install_root" \
+$curl_src_root/configure --prefix="$(eval echo $curl_install_root)" \
                          1> "$curl_stdout" 2> "$curl_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure CURL! See $curl_stderr."

@@ -33,7 +33,7 @@ cd <name>_build
 <name>_stdout="$build_root/<name>_stdout"
 <name>_stderr="$build_root/<name>_stderr"
 temp_notice "See $<name>_stdout and $<name>_stderr for output."
-$<name>_src_root/configure --prefix="$<name>_install_root" \
+$<name>_src_root/configure --prefix="$(eval echo $<name>_install_root)" \
                            1> "$<name>_stdout" 2> "$<name>_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure <NAME>! See $<name>_stderr."

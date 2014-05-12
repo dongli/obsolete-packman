@@ -29,7 +29,7 @@ uuid_stdout="$build_root/uuid_stdout"
 uuid_stderr="$build_root/uuid_stderr"
 temp_notice "See $uuid_stdout and $uuid_stderr for output."
 cd $uuid_src_root
-$uuid_src_root/configure --prefix="$uuid_install_root" \
+$uuid_src_root/configure --prefix="$(eval echo $uuid_install_root)" \
                          CC=$c_compiler CXX=$cxx_compiler \
                          1> "$uuid_stdout" 2> "$uuid_stderr"
 if [[ $? != 0 ]]; then

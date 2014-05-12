@@ -15,7 +15,7 @@ lapack_url="http://www.netlib.org/lapack/lapack-3.5.0.tgz"
 lapack_shasum="5870081889bf5d15fd977993daab29cf3c5ea970"
 lapack_package="lapack-3.5.0.tgz"
 lapack_src_root="$build_root/lapack-3.5.0"
-lapack_install_root="$install_root/lapack/$fortran_compiler/3.5.0"
+lapack_install_root="$install_root/lapack/\$fortran_compiler/3.5.0"
 lapack_bashrc="$install_root/lapack/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -34,7 +34,7 @@ lapack_stdout="$build_root/lapack_stdout"
 lapack_stderr="$build_root/lapack_stderr"
 temp_notice "See $lapack_stdout and $lapack_stderr for output."
 CC=$c_compiler CXX=$cxx_compiler FC=$fortran_compiler cmake "$lapack_src_root" \
-    -DCMAKE_INSTALL_PREFIX="$lapack_install_root" \
+    -DCMAKE_INSTALL_PREFIX="$(eval echo $lapack_install_root)" \
     -DCMAKE_BUILD_TYPE="Release" \
     1> "$lapack_stdout" 2> "$lapack_stderr"
 if [[ $? != 0 ]]; then

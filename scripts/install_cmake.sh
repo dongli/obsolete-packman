@@ -33,7 +33,7 @@ cd cmake_build
 cmake_stdout="$build_root/cmake_stdout"
 cmake_stderr="$build_root/cmake_stderr"
 temp_notice "See $cmake_stdout and $cmake_stderr for output."
-$cmake_src_root/configure --prefix="$cmake_install_root" \
+$cmake_src_root/configure --prefix="$(eval echo $cmake_install_root)" \
                           1> "$cmake_stdout" 2> "$cmake_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure CMAKE! See $cmake_stderr."

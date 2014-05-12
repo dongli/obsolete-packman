@@ -15,7 +15,7 @@ udunits_url="ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-2.1.24.tar.gz"
 udunits_shasum="64bbb4b852146fb5d476baf4d37c9d673cfa42f9"
 udunits_package="udunits-2.1.24.tar.gz"
 udunits_src_root="$build_root/udunits-2.1.24"
-udunits_install_root="$install_root/udunits/$fortran_compiler/2.1.24"
+udunits_install_root="$install_root/udunits/\$fortran_compiler/2.1.24"
 udunits_bashrc="$install_root/udunits/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -33,7 +33,7 @@ cd udunits_build
 udunits_stdout="$build_root/udunits_stdout"
 udunits_stderr="$build_root/udunits_stderr"
 temp_notice "See $udunits_stdout and $udunits_stderr for output."
-$udunits_src_root/configure --prefix="$udunits_install_root" \
+$udunits_src_root/configure --prefix="$(eval echo $udunits_install_root)" \
                             CC=$c_compiler CXX=$cxx_compiler \
                             FC=$fortran_compiler \
                             1> "$udunits_stdout" 2> "$udunits_stderr"

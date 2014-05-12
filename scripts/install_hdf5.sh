@@ -18,7 +18,7 @@ hdf5_url="http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.12/src/hdf5-1.8.12.
 hdf5_shasum="8414ca0e6ff7d08e423955960d641ec5f309a55f"
 hdf5_package="hdf5-1.8.12.tar.bz2"
 hdf5_src_root="$build_root/hdf5-1.8.12"
-hdf5_install_root="$install_root/hdf5/$fortran_compiler/1.8.12"
+hdf5_install_root="$install_root/hdf5/\$fortran_compiler/1.8.12"
 hdf5_bashrc="$install_root/hdf5/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -36,7 +36,7 @@ cd hdf5_build
 hdf5_stdout="$build_root/hdf5_stdout"
 hdf5_stderr="$build_root/hdf5_stderr"
 temp_notice "See $hdf5_stdout and $hdf5_stderr for output."
-$hdf5_src_root/configure --prefix="$hdf5_install_root" \
+$hdf5_src_root/configure --prefix="$(eval echo $hdf5_install_root)" \
                          --with-szlib="$SZIP_ROOT" \
                          --enable-fortran --enable-fortran2003 \
                          --enable-cxx \

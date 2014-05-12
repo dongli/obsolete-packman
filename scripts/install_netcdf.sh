@@ -28,7 +28,7 @@ netcdf_fortran_url="http://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-fort
 netcdf_fortran_shasum="f1887314455330f4057bc8eab432065f8f6f74ef"
 netcdf_fortran_package="netcdf-fortran-4.2.tar.gz"
 netcdf_fortran_src_root="$build_root/netcdf-fortran-4.2"
-netcdf_install_root="$install_root/netcdf/$fortran_compiler/4.3.1.1"
+netcdf_install_root="$install_root/netcdf/\$fortran_compiler/4.3.1.1"
 netcdf_bashrc="$install_root/netcdf/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -57,7 +57,7 @@ mkdir netcdf_c_build
 cd netcdf_c_build
 # --disable-dap-remote-tests is only for 4.3.1.1
 # See http://www.unidata.ucar.edu/support/help/MailArchives/netcdf/msg12416.html
-$netcdf_c_src_root/configure --prefix="$netcdf_install_root" \
+$netcdf_c_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
                              --enable-netcdf4 \
                              --disable-dap-remote-tests \
                              CFLAGS="-I$SZIP_ROOT/include -I$HDF5_ROOT/include -I$CURL_ROOT/include" \
@@ -101,7 +101,7 @@ if [[ -d netcdf_cxx_build ]]; then
 fi
 mkdir netcdf_cxx_build
 cd netcdf_cxx_build
-$netcdf_cxx_src_root/configure --prefix="$netcdf_install_root" \
+$netcdf_cxx_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
                                CPPFLAGS="-I$netcdf_install_root/include" \
                                CXXFLAGS="-I$netcdf_install_root/include" \
                                LDFLAGS="-L$netcdf_install_root/lib" \
@@ -142,7 +142,7 @@ if [[ -d netcdf_fortran_build ]]; then
 fi
 mkdir netcdf_fortran_build
 cd netcdf_fortran_build
-$netcdf_fortran_src_root/configure --prefix="$netcdf_install_root" \
+$netcdf_fortran_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
                                    CPPFLAGS="-I$netcdf_install_root/include" \
                                    FCFLAGS="-I$netcdf_install_root/include" \
                                    LDFLAGS="-L$netcdf_install_root/lib" \

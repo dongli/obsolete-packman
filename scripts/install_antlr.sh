@@ -35,7 +35,7 @@ perl -ni -e 'print; print "#include <cstdio>\n" if $. == 14' \
 antlr_stdout="$build_root/antlr_stdout"
 antlr_stderr="$build_root/antlr_stderr"
 temp_notice "See $antlr_stdout and $antlr_stderr for output."
-$antlr_src_root/configure --prefix="$antlr_install_root" \
+$antlr_src_root/configure --prefix="$(eval echo $antlr_install_root)" \
                           --disable-csharp \
                           --disable-java \
                           --disable-python \

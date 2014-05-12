@@ -15,7 +15,7 @@ openblas_url="https://codeload.github.com/xianyi/OpenBLAS/zip/v0.2.9.rc2"
 openblas_shasum="2c6b50bfdcb2c2568fd8574b0c3b3d8e07f12b4a"
 openblas_package="OpenBLAS-0.2.9.rc2.zip"
 openblas_src_root="$build_root/OpenBLAS-0.2.9.rc2"
-openblas_install_root="$install_root/openblas/$fortran_compiler/0.2.9.rc2"
+openblas_install_root="$install_root/openblas/\$fortran_compiler/0.2.9.rc2"
 openblas_bashrc="$install_root/openblas/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
@@ -37,7 +37,8 @@ if [[ $? != 0 ]]; then
     report_error "Failed to make OPENBLAS! See $openblas_stderr."
     exit 1
 fi
-make install PREFIX=$openblas_install_root 1> "$openblas_stdout" 2> "$openblas_stderr"
+make install PREFIX="$(eval echo $openblas_install_root)" \
+     1> "$openblas_stdout" 2> "$openblas_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install OPENBLAS! See $openblas_stderr."
     exit 1

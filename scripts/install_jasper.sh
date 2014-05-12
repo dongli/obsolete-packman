@@ -15,7 +15,7 @@ jasper_url="http://www.ece.uvic.ca/~frodo/jasper/software/jasper-1.900.1.zip"
 jasper_shasum="9c5735f773922e580bf98c7c7dfda9bbed4c5191"
 jasper_package="jasper-1.900.1.zip"
 jasper_src_root="$build_root/jasper-1.900.1"
-jasper_install_root="$install_root/jasper/$fortran_compiler/1.900.1"
+jasper_install_root="$install_root/jasper/\$fortran_compiler/1.900.1"
 jasper_bashrc="$install_root/jasper/bashrc"
 # ------------------------------------------------------------------------------
 # unzip package
@@ -33,7 +33,7 @@ cd jasper_build
 jasper_stdout="$build_root/jasper_stdout"
 jasper_stderr="$build_root/jasper_stderr"
 temp_notice "See $jasper_stdout and $jasper_stderr for output."
-$jasper_src_root/configure --prefix="$jasper_install_root" \
+$jasper_src_root/configure --prefix="$(eval echo $jasper_install_root)" \
                            CC=$c_compiler CXX=$cxx_compiler \
                            F77=$fortran_compiler \
                            1> "$jasper_stdout" 2> "$jasper_stderr"
