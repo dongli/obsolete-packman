@@ -28,8 +28,10 @@ tar xf "$PACKMAN_PACKAGES/$antlr_package"
 # compile package
 cd $antlr_src_root
 # Fix bugs in ANTLR
-sed -i "13a #include <strings.h>" "$antlr_src_root/lib/cpp/antlr/CharScanner.hpp"
-sed -i "14a #include <cstdio>" "$antlr_src_root/lib/cpp/antlr/CharScanner.hpp"
+perl -ni -e 'print; print "#include <strings.h>\n" if $. == 13' \
+    "$antlr_src_root/lib/cpp/antlr/CharScanner.hpp"
+perl -ni -e 'print; print "#include <cstdio>\n" if $. == 14' \
+    "$antlr_src_root/lib/cpp/antlr/CharScanner.hpp"
 antlr_stdout="$build_root/antlr_stdout"
 antlr_stderr="$build_root/antlr_stderr"
 temp_notice "See $antlr_stdout and $antlr_stderr for output."

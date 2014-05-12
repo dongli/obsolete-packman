@@ -10,6 +10,8 @@ c_compiler=$5
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
 # ------------------------------------------------------------------------------
+source "$install_root/openblas/bashrc"
+# ------------------------------------------------------------------------------
 # some pacakage parameters
 armadillo_url="http://jaist.dl.sourceforge.net/project/arma/armadillo-4.100.2.tar.gz"
 armadillo_shasum="4cf8cb82c8197dda08f019455d006cbc2b093fcf"
@@ -20,11 +22,13 @@ armadillo_bashrc="$install_root/armadillo/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
 cd "$build_root"
-if [[ ! -d "$armadillo_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$armadillo_package"
-    # fix a cmake bug
-    sed -i '11s/$/ $ENV{OPENBLAS_ROOT}/lib/' "$armadillo_src_root/build_aux/cmake/Modules/ARMA_FindOpenBLAS.cmake"
+if [[ -d "$armadillo_src_root" ]]; then
+    rm -rf "$armadillo_src_root"
 fi
+tar xf "$PACKMAN_PACKAGES/$armadillo_package"
+# fix a cmake bug
+perl -pi -e 's/$/ $ENV{OPENBLAS_ROOT}\/lib/ if $. == 11' \
+    "$armadillo_src_root/build_aux/cmake/Modules/ARMA_FindOpenBLAS.cmake"
 # ------------------------------------------------------------------------------
 # compile package
 if [[ -d armadillo_build ]]; then

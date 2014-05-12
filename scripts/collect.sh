@@ -18,24 +18,28 @@ if [[ ! -d "$PACKMAN_PACKAGES" ]]; then
 fi
 cd "$PACKMAN_PACKAGES"
 
-shasum_cmd=sha1sum
+if [[ $(get_os_type) == "Linux" ]]; then
+    shasum_cmd=sha1sum
+elif [[ $(get_os_type) == "Darwin" ]]; then
+    shasum_cmd=shasum
+fi
 
 for file in $(ls $PACKMAN_SCRIPTS/install_*.sh); do
     i=0
     for tmp in $(echo $(grep '_url=' $file)); do
-        url=$(echo $tmp | sed 's/\w\+_url="\?\([^"]*\)"\?/\1/')
+        url=$(echo $tmp | perl -ne 's/\w+_url="?([^"]*)"?/\1/ and print')
         urls[$i]=$url
         i=$((i+1))
     done
     i=0
     for tmp in $(echo $(grep '_package=' $file)); do
-        package=$(echo $tmp | sed 's/\w\+_package="\?\([^"]*\)"\?/\1/')
+        package=$(echo $tmp | perl -ne 's/\w+_package="?([^"]*)"?/\1/ and print')
         packages[$i]=$package
         i=$((i+1))
     done
     i=0
     for tmp in $(echo $(grep '_shasum=' $file)); do
-        shasum=$(echo $tmp | sed 's/\w\+_shasum="\?\([^"]*\)"\?/\1/')
+        shasum=$(echo $tmp | perl -ne 's/\w+_shasum="?([^"]*)"?/\1/ and print')
         shasums[$i]=$shasum
         i=$((i+1))
     done
