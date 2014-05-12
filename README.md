@@ -9,10 +9,13 @@ is created are:
   GCC) are fairly low! It causes much headache when porting program.
 - Some useful packages are missing, e.g. GIT, NetCDF.
 - Fortran compiler messes up package versions.
+- Linux package managers (e.g. rpm, apt) are too conservative.
 
-With all these pains in my ass, I decided to create a tool `packman`. The final
-goal is no matter how messy the server is (we do not give a shit!), we could
-use `packman` to setup the necessary development environment. So we can focus on
+In Mac, we have the wonderful `homebrew`, which is truely addictive, but the
+port to Linux `linuxbrew` is not really ready for serious use. With all these
+pains in my ass, I decided to create a tool `packman` on my own. The final goal
+is no matter how messy the server is (we do not give a shit!), we could use
+`packman` to setup the necessary development environment. So we can focus on
 our real problems, not install the packages over and over again!
 
 Usage
@@ -43,11 +46,18 @@ the same time. After configuring, run:
 $ packman install <path_to_config_file>
 ```
 The packages will be built in order. When you want to use the packages
-installed by `packman`, you need to run:
+installed by `packman`, you have two options. One is through the following
+command:
 ```
 $ packman setup_env <path_to_config_file>
 ```
 You will go into a new BASH session where the packages can be used or linked.
+The other may be more convenient in your BASH configuration file (e.g.
+.bashrc):
+```
+source <path_to_install_root>/bashrc
+```
+By now, you will have fresh packages (no more GCC 4.1.2!).
 
 Available packages
 ==================
@@ -79,6 +89,8 @@ on two Linux servers and a Mac server:
 | texinfo                           | 5.2       |
 | udunits                           | 2.1.24    |
 | uuid                              | 1.6.2     |
+
+More packages can be added gradually by me or by community.
 
 Authors
 =======
