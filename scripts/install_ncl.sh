@@ -37,10 +37,13 @@ ncl_install_root="$install_root/ncl/6.2.0"
 ncl_bashrc="$install_root/ncl/bashrc"
 # ------------------------------------------------------------------------------
 # untar pacakage
+if [[ ! -d "$ncl_install_root" ]]; then
+    mkdir -p "$ncl_install_root"
+fi
 tar xf "$PACKMAN_PACKAGES/$ncl_package" -C "$ncl_install_root"
 # ------------------------------------------------------------------------------
 # export BASH configuration
 cat <<EOF > "$ncl_bashrc"
 export NCARG_ROOT=$ncl_install_root
-export PATH=\$NCAR_ROOT/bin:\$PATH
+export PATH=\$NCARG_ROOT/bin:\$PATH
 EOF

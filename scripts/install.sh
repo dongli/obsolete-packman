@@ -26,14 +26,18 @@ config_file=$1
 
 check_file_existence "$config_file"
 
+include_packages=$(get_config_entry "$config_file" "include_packages" "all")
 exclude_packages=$(get_config_entry "$config_file" "exclude_packages" "none")
 install_root=$(get_config_entry "$config_file" "install_root")
 fortran_compiler=$(get_config_entry "$config_file" "fortran_compiler" "gfortran")
 cxx_compiler=$(get_config_entry "$config_file" "cxx_compiler" "g++")
 c_compiler=$(get_config_entry "$config_file" "c_compiler" "gcc")
 
-package_root="$(pwd)/packages"
-build_root="$(pwd)/build"
+if [[ "$include_packages" != "all" && "$exclude_packages" != "none" ]]; then
+    report_error "Parameter $(add_color include_packages 'bold') and $(add_color exclude_packages 'bold') can not be set at the same time!"
+fi
+
+build_root="$PACKMAN_ROOT/build"
 
 if [[ ! -d "$build_root" ]]; then
     notice "Create build directory."
@@ -41,7 +45,8 @@ if [[ ! -d "$build_root" ]]; then
 fi
 
 for package in $(cat "$PACKMAN_SCRIPTS/install_order.txt"); do
-    if [[ $exclude_packages =~ $package ]]; then
+    if [[ $exclude_packages =~ $package || \
+          ( $include_packages != "all" && ! $include_packages =~ $package ) ]]; then
         notice "Skip package $(add_color $package 'magenta bold')."
         if [[ -f "$install_root/$package/bashrc" ]]; then
             source "$install_root/$package/bashrc"
