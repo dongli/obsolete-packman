@@ -10,10 +10,41 @@ is created are:
 - Some useful packages are missing, e.g. GIT, NetCDF.
 - Fortran compiler messes up package versions.
 
-With all these pains in my ass, I decided to create a tool. The final goal is
-no matter how messy ther server is, we could use packman to setup the necessary
-development environment. So we can focus on our real problems, not install the
-packages over and over again!
+With all these pains in my ass, I decided to create a tool `packman`. The final
+goal is no matter how messy ther server is, we could use packman to setup the
+necessary development environment. So we can focus on our real problems, not
+install the packages over and over again!
+
+Usage
+=====
+
+Grab `packman` in whatever way you like (through git or get zip file). Add the
+following line into your BASH configuration file (e.g. .bashrc):
+```
+source <path_to_packman>/setup.sh
+```
+First you must collect all the packages from internet by typing:
+```
+$ packman collect
+```
+When the remote server can not access internet, you can do this in your local
+computer, and upload `packman` with the downloaded packages onto server.
+Second you need to edit a configuration for `packman` as:
+```
+install_root = <where you want to put the built packages>
+fortran_compiler = <fortran compiler you like>
+exclude_packages = <any package you do not want to built>
+```
+Then run:
+```
+$ packman install <path_to_config_file>
+```
+The packages will be built in order. When you want to use the packages
+installed by `packman`, you need to run:
+```
+$ packman setup_env <path_to_config_file>
+```
+You will go into a new BASH session where the packages can be used or linked.
 
 Available packages
 ==================
