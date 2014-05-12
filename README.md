@@ -12,7 +12,7 @@ is created are:
 
 With all these pains in my ass, I decided to create a tool `packman`. The final
 goal is no matter how messy the server is (we do not give a shit!), we could
-use packman to setup the necessary development environment. So we can focus on
+use `packman` to setup the necessary development environment. So we can focus on
 our real problems, not install the packages over and over again!
 
 Usage
@@ -33,9 +33,12 @@ Second you need to edit a configuration for `packman` as:
 ```
 install_root = <where you want to put the built packages>
 fortran_compiler = <fortran compiler you like>
-exclude_packages = <any package you do not want to built>
+exclude_packages = <package1> <package2> ...
+include_packages = <package1> <package2> ...
 ```
-Then run:
+where `exclude_packages` is the list for packages that are not to be installed,
+and `include_packages` is the opposite. The two parameters can not be set at
+the same time. After configuring, run:
 ```
 $ packman install <path_to_config_file>
 ```
@@ -50,7 +53,7 @@ Available packages
 ==================
 
 The following is a list of the packages that I have tried to built with success
-on a Linux server:
+on two Linux servers and a Mac server:
 
 | package name                      | version   |
 |-----------------------------------|-----------|
@@ -62,7 +65,7 @@ on a Linux server:
 | curl                              | 7.36.0    |
 | gcc                               | 4.8.2     |
 | git                               | 1.9.2     |
-| grib-api                          | 1.12.1    |
+| grib-api (in grib)                | 1.12.1    |
 | hdf5  (with C++ and Fortran API)  | 1.8.12    |
 | jasper                            | 1.900.1   |
 | lapack                            | 3.5.0     |
