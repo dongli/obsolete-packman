@@ -11,9 +11,9 @@ is created are:
 - Fortran compiler messes up package versions.
 
 With all these pains in my ass, I decided to create a tool `packman`. The final
-goal is no matter how messy ther server is, we could use packman to setup the
-necessary development environment. So we can focus on our real problems, not
-install the packages over and over again!
+goal is no matter how messy the server is (we do not give a shit!), we could
+use packman to setup the necessary development environment. So we can focus on
+our real problems, not install the packages over and over again!
 
 Usage
 =====
