@@ -18,6 +18,10 @@ is no matter how messy the server is (we do not give a shit!), we could use
 `packman` to setup the necessary development environment. So we can focus on
 our real problems, not install the packages over and over again!
 
+I used my time to save your time, so consider make a donation to make me add
+more functions!
+![](https://gist.githubusercontent.com/dongli/9634592/raw/52aaee8b20222e9757429bce3efc6b8c819037a8/ap4l61nbskhw46qnef.png =32x32)
+
 Usage
 =====
 
