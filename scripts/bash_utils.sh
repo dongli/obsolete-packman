@@ -90,17 +90,10 @@ function check_file_existence
     if [[ -z $1 ]]; then
         report_error "check_file_existence: Empty argument!"
     fi
-    dir=$(dirname $1)
-    base=$(basename $1)
-    files=$(find $dir -name $base)
-    if [[ "$files" == "" ]]; then
+    file=$1
+    if [[ ! -f $file ]]; then
         report_error "File \"$file\" does not exist!"
     fi
-    for file in $files; do
-        if [ ! -f $file ]; then
-            report_error "File \"$file\" does not exist!"
-        fi
-    done
 }
 
 function check_directory_existence

@@ -18,7 +18,13 @@ function packman_help
     echo
     echo -e "\tsetup the BASH environment"
     echo
+    echo -e "- packman $(add_color update 'bold')"
+    echo
+    echo -e "\tupdate PACKMAN (need cloned through GIT)"
+    echo
     echo -e "- packman $(add_color help 'bold')"
+    echo
+    echo -e "\tprint this help"
     echo
 }
 
@@ -31,6 +37,9 @@ case $1 in
     ;;
 "setup_env")
     "$PACKMAN_SCRIPTS/setup_env.sh" $2
+    ;;
+"update")
+    "$PACKMAN_SCRIPTS/update.sh"
     ;;
 "help")
     packman_help
