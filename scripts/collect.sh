@@ -51,7 +51,7 @@ for file in $(ls $PACKMAN_SCRIPTS/install_*.sh); do
         else
             notice "Download $(add_color ${packages[$i]} 'bold green')."
         fi
-        curl --progress-bar "${urls[$i]}" -o ${packages[$i]}
+        curl --Location --progress-bar "${urls[$i]}" -o ${packages[$i]}
     done
     unset urls packages shasums
 done
