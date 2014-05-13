@@ -32,16 +32,21 @@ source <path_to_packman>/setup.sh
 ```
 First you must collect all the packages from internet by typing:
 ```
-$ packman collect
+$ packman collect <path_to_config_file>
 ```
-When the remote server can not access internet, you can do this in your local
-computer, and upload `packman` with the downloaded packages onto server.
-Second you need to edit a configuration for `packman` as:
+where you need to set `package_root` at least. When the remote server can not
+access internet, you can do this in your local computer, and upload `packman`
+with the downloaded packages onto server. Second you need to edit a
+configuration for `packman` as:
 ```
-install_root = <where you want to put the built packages>
-fortran_compiler = <fortran compiler you like>
-exclude_packages = <package1> <package2> ...
-include_packages = <package1> <package2> ...
+package_root = <where_is_packages>
+build_root = <where_to_build_packages>
+install_root = <where_to_install>
+c_compiler = gcc
+cxx_compiler = g++
+fortran_compiler = gfortran
+#include_packages = all
+#exclude_packages = none
 ```
 where `exclude_packages` is the list for packages that are not to be installed,
 and `include_packages` is the opposite. The two parameters can not be set at
