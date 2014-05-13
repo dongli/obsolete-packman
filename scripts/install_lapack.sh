@@ -19,6 +19,8 @@ lapack_install_root="$install_root/lapack/\$fortran_compiler/3.5.0"
 lapack_bashrc="$install_root/lapack/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$lapack_package" "$lapack_shasum"
+exit
 cd "$build_root"
 if [[ ! -d "$lapack_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$lapack_package"

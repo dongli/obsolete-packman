@@ -25,6 +25,7 @@ nco_install_root="$install_root/nco/4.4.2"
 nco_bashrc="$install_root/nco/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$nco_package" "$nco_shasum"
 cd "$build_root"
 if [[ ! -d "$nco_src_root" ]]; then
     rm -rf "$nco_src_root"
@@ -46,23 +47,19 @@ $nco_src_root/configure --prefix="$(eval echo $nco_install_root)" \
                         1> "$nco_stdout" 2> "$nco_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NCO! See $nco_stderr."
-    exit 1
 fi
 make -j 4 1> "$nco_stdout" 2> "$nco_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make NCO! See $nco_stderr."
-    exit 1
 fi
 source "$install_root/gcc/bashrc" \
 make check 1> "$nco_stdout" 2> "$nco_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check NCO! See $nco_stderr."
-    exit 1
 fi
 make install 1> "$nco_stdout" 2> "$nco_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install NCO! See $nco_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

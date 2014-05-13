@@ -19,6 +19,7 @@ texinfo_install_root="$install_root/texinfo/5.2"
 texinfo_bashrc="$install_root/texinfo/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$texinfo_package" "$texinfo_shasum"
 cd "$build_root"
 if [[ ! -d "$texinfo_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$texinfo_package"
@@ -34,22 +35,18 @@ $texinfo_src_root/configure --prefix="$(eval echo $texinfo_install_root)" \
                             1> "$texinfo_stdout" 2> "$texinfo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure TEXINFO! See $texinfo_stderr."
-    exit 1
 fi
 make -j 4 1> "$texinfo_stdout" 2> "$texinfo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make TEXINFO! See $texinfo_stderr."
-    exit 1
 fi
 make check 1> "$texinfo_stdout" 2> "$texinfo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check TEXINFO! See $texinfo_stderr."
-    exit 1
 fi
 make install 1> "$texinfo_stdout" 2> "$texinfo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install TEXINFO! See $texinfo_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

@@ -23,6 +23,10 @@ check_file_existence "$config_file"
 install_root=$(get_config_entry "$config_file" "install_root")
 
 for package in $(ls "$install_root"); do
+    if [[ $package == "bashrc" ]]; then
+        # skip the global bashrc file
+        continue
+    fi
     if [[ ! -f "$install_root/$package/bashrc" ]]; then
         report_error "Package $(add_color $package 'green bold') does not have bashrc!"
     fi

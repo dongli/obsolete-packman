@@ -19,9 +19,10 @@ openblas_install_root="$install_root/openblas/\$fortran_compiler/0.2.9.rc2"
 openblas_bashrc="$install_root/openblas/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$openblas_package" "$openblas_shasum"
 cd "$build_root"
 if [[ ! -d "$openblas_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$openblas_package"
+    unzip -qq "$PACKMAN_PACKAGES/$openblas_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package
@@ -35,13 +36,11 @@ temp_notice "See $openblas_stdout and $openblas_stderr for output."
 make -j 4 CC=$c_compiler FC=$fortran_compiler 1> "$openblas_stdout" 2> "$openblas_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make OPENBLAS! See $openblas_stderr."
-    exit 1
 fi
 make install PREFIX="$(eval echo $openblas_install_root)" \
      1> "$openblas_stdout" 2> "$openblas_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install OPENBLAS! See $openblas_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

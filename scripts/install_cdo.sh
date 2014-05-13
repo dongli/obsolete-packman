@@ -27,6 +27,7 @@ cdo_install_root="$install_root/cdo/1.6.3"
 cdo_bashrc="$install_root/cdo/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$cdo_package" "$cdo_shasum"
 cd "$build_root"
 if [[ ! -d "$cdo_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$cdo_package"
@@ -52,22 +53,18 @@ $cdo_src_root/configure --prefix="$(eval echo $cdo_install_root)" \
                         1> "$cdo_stdout" 2> "$cdo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure CDO! See $cdo_stderr."
-    exit 1
 fi
 make 1> "$cdo_stdout" 2> "$cdo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make CDO! See $cdo_stderr."
-    exit 1
 fi
 make check 1> "$cdo_stdout" 2> "$cdo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check CDO! See $cdo_stderr."
-    exit 1
 fi
 make install 1> "$cdo_stdout" 2> "$cdo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install CDO! See $cdo_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

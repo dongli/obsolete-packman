@@ -21,6 +21,7 @@ armadillo_install_root="$install_root/armadillo/4.100.2"
 armadillo_bashrc="$install_root/armadillo/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$armadillo_package" "$armadillo_shasum"
 cd "$build_root"
 if [[ -d "$armadillo_src_root" ]]; then
     rm -rf "$armadillo_src_root"
@@ -45,17 +46,14 @@ cmake "$armadillo_src_root" \
     1> "$armadillo_stdout" 2> "$armadillo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure ARMADILLO! See $armadillo_stderr."
-    exit 1
 fi
 make -j 4 1> "$armadillo_stdout" 2> "$armadillo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make ARMADILLO! See $armadillo_stderr."
-    exit 1
 fi
 make install 1> "$armadillo_stdout" 2> "$armadillo_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install ARMADILLO! See $armadillo_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

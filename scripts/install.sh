@@ -14,7 +14,18 @@
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
 
 if [[ -z "$1" ]]; then
-    report_error "Wrong usage! Please provide configuration file."
+    config_file="config.txt"
+    if [[ ! -f $config_file ]]; then
+        cat <<-EOF > $config_file
+        install_root = <path_to_install_root>
+        c_compiler = gcc
+        cxx_compiler = g++
+        fortran_compiler = gfortran
+        #include_packages = all
+        #exclude_packages = none
+EOF
+    fi
+    notice "PACKMAN needs your instruction to install packages. Please fill in the $config_file."
 fi
 config_file=$1
 check_file_existence "$config_file"
@@ -37,9 +48,23 @@ if [[ ! -d "$build_root" ]]; then
     mkdir "$build_root"
 fi
 # ------------------------------------------------------------------------------
+# common functions for building packages
+function check_package
+{
+    package="$PACKMAN_PACKAGES/$1"
+    shasum=$2
+    if [[ ! -f "$package" ]]; then
+        report_error "$(add_color $package 'bold green') is not downloaded!"
+    elif ! check_shasum "$package" "$shasum"; then
+        report_error "$(add_color $package 'bold green') is broken!"
+    fi
+
+}
+export -f check_package
+# ------------------------------------------------------------------------------
 # build each package
 for package in $(cat "$PACKMAN_SCRIPTS/install_order.txt"); do
-    if [[ $exclude_packages =~ $package || \
+    if [[ ( $exclude_packages == "all" ||   $exclude_packages =~ $package ) || \
           ( $include_packages != "all" && ! $include_packages =~ $package ) ]]; then
         notice "Skip package $(add_color $package 'magenta bold')."
         if [[ -f "$install_root/$package/bashrc" ]]; then
@@ -60,7 +85,14 @@ export c_compiler=$c_compiler
 export cxx_compiler=$cxx_compiler
 export fortran_compiler=$fortran_compiler
 
-for package_bashrc in \$(find $install_root -mindepth 2 -name bashrc); do
-    source "\$package_bashrc"
+for package in $(ls "$install_root"); do
+    if [[ $package == "bashrc" ]]; then
+        # skip the global bashrc file
+        continue
+    fi
+    if [[ ! -f "$install_root/$package/bashrc" ]]; then
+        report_error "Package $(add_color $package 'green bold') does not have bashrc!"
+    fi
+    source "$install_root/$package/bashrc"
 done
 EOF

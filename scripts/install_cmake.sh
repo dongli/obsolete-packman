@@ -19,6 +19,7 @@ cmake_install_root="$install_root/cmake/2.8.12.2"
 cmake_bashrc="$install_root/cmake/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$cmake_package" "$cmake_shasum"
 cd "$build_root"
 if [[ ! -d "$cmake_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$cmake_package"
@@ -37,17 +38,14 @@ $cmake_src_root/configure --prefix="$(eval echo $cmake_install_root)" \
                           1> "$cmake_stdout" 2> "$cmake_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure CMAKE! See $cmake_stderr."
-    exit 1
 fi
 make 1> "$cmake_stdout" 2> "$cmake_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make CMAKE! See $cmake_stderr."
-    exit 1
 fi
 make install 1> "$cmake_stdout" 2> "$cmake_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install CMAKE! See $cmake_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

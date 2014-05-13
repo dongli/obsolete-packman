@@ -23,6 +23,7 @@ grib_install_root="$install_root/grib/\$fortran_compiler/1.12.1"
 grib_bashrc="$install_root/grib/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$grib_package" "$grib_shasum"
 cd "$build_root"
 if [[ ! -d "$grib_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$grib_package"
@@ -44,22 +45,18 @@ $grib_src_root/configure --prefix="$(eval echo $grib_install_root)" \
                          1> "$grib_stdout" 2> "$grib_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure GRIB! See $grib_stderr."
-    exit 1
 fi
 make -j 4 1> "$grib_stdout" 2> "$grib_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make GRIB! See $grib_stderr."
-    exit 1
 fi
 make check 1> "$grib_stdout" 2> "$grib_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check GRIB! See $grib_stderr."
-    exit 1
 fi
 make install 1> "$grib_stdout" 2> "$grib_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install GRIB! See $grib_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

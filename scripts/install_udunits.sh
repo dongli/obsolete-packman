@@ -19,6 +19,7 @@ udunits_install_root="$install_root/udunits/\$fortran_compiler/2.1.24"
 udunits_bashrc="$install_root/udunits/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$udunits_package" "$udunits_shasum"
 cd "$build_root"
 if [[ ! -d "$udunits_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$udunits_package"
@@ -39,22 +40,18 @@ $udunits_src_root/configure --prefix="$(eval echo $udunits_install_root)" \
                             1> "$udunits_stdout" 2> "$udunits_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure UDUNITS! See $udunits_stderr."
-    exit 1
 fi
 make -j 4 1> "$udunits_stdout" 2> "$udunits_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make UDUNITS! See $udunits_stderr."
-    exit 1
 fi
 make check 1> "$udunits_stdout" 2> "$udunits_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check UDUNITS! See $udunits_stderr."
-    exit 1
 fi
 make install 1> "$udunits_stdout" 2> "$udunits_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install UDUNITS! See $udunits_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

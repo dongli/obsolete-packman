@@ -19,6 +19,7 @@ jasper_install_root="$install_root/jasper/\$fortran_compiler/1.900.1"
 jasper_bashrc="$install_root/jasper/bashrc"
 # ------------------------------------------------------------------------------
 # unzip package
+check_package "$jasper_package" "$jasper_shasum"
 cd "$build_root"
 if [[ ! -d "$jasper_src_root" ]]; then
     unzip -qq "$PACKMAN_PACKAGES/$jasper_package"
@@ -39,22 +40,18 @@ $jasper_src_root/configure --prefix="$(eval echo $jasper_install_root)" \
                            1> "$jasper_stdout" 2> "$jasper_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure JASPER! See $jasper_stderr."
-    exit 1
 fi
 make -j 4 1> "$jasper_stdout" 2> "$jasper_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make JASPER! See $jasper_stderr."
-    exit 1
 fi
 make check 1> "$jasper_stdout" 2> "$jasper_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check JASPER! See $jasper_stderr."
-    exit 1
 fi
 make install 1> "$jasper_stdout" 2> "$jasper_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install JASPER! See $jasper_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

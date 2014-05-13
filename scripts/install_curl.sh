@@ -19,6 +19,7 @@ curl_install_root="$install_root/curl/7.36.0"
 curl_bashrc="$install_root/curl/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$curl_package" "$curl_shasum"
 cd "$build_root"
 if [[ ! -d "$curl_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$curl_package"
@@ -37,17 +38,14 @@ $curl_src_root/configure --prefix="$(eval echo $curl_install_root)" \
                          1> "$curl_stdout" 2> "$curl_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure CURL! See $curl_stderr."
-    exit 1
 fi
 make -j 4 1> "$curl_stdout" 2> "$curl_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make CURL! See $curl_stderr."
-    exit 1
 fi
 make install 1> "$curl_stdout" 2> "$curl_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install CURL! See $curl_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

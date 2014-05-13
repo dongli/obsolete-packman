@@ -19,6 +19,7 @@ antlr_install_root="$install_root/antlr/2.7.7"
 antlr_bashrc="$install_root/antlr/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$antlr_package" "$antlr_shasum"
 cd "$build_root"
 if [[ ! -d "$antlr_src_root" ]]; then
     rm -rf "$antlr_src_root"
@@ -42,17 +43,14 @@ $antlr_src_root/configure --prefix="$(eval echo $antlr_install_root)" \
                           1> "$antlr_stdout" 2> "$antlr_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure ANTLR! See $antlr_stderr."
-    exit 1
 fi
 make -j 4 1> "$antlr_stdout" 2> "$antlr_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make ANTLR! See $antlr_stderr."
-    exit 1
 fi
 make install 1> "$antlr_stdout" 2> "$antlr_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install ANTLR! See $antlr_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

@@ -28,6 +28,10 @@ mpc_package="mpc-0.8.1.tar.gz"
 mpc_src_root="$build_root/mpc-0.8.1"
 # ------------------------------------------------------------------------------
 # untar packages
+check_package "$gcc_package" "$gcc_shasum"
+check_package "$gmp_package" "$gmp_shasum"
+check_package "$mpfr_package" "$mpfr_shasum"
+check_package "$mpc_package" "$mpc_shasum"
 cd "$build_root"
 if [[ ! -d "$gcc_src_root" ]]; then
     temp_notice "Untar $gcc_package ..."
@@ -60,23 +64,19 @@ $gcc_src_root/configure --prefix="$(eval echo $gcc_install_root)" \
                         1> $gcc_stdout 2> $gcc_stderr
 if [[ $? != 0 ]]; then
     report_error "Failed to configure GCC!"
-    exit 1
 fi
 make -j 4 1> $gcc_stdout 2> $gcc_stderr
 if [[ $? != 0 ]]; then
     report_error "Failed to make GCC!"
-    exit 1
 fi
 report_warning "GCC is not checked."
 #make -k check 1> $gcc_stdout 2> $gcc_stderr
 #if [[ $? != 0 ]]; then
 #    report_error "Failed to check GCC!"
-#    exit 1
 #fi
 make install 1> "$gcc_stdout" 2> "$gcc_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install GCC!"
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

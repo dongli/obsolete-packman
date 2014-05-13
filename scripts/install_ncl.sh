@@ -37,6 +37,7 @@ ncl_install_root="$install_root/ncl/6.2.0"
 ncl_bashrc="$install_root/ncl/bashrc"
 # ------------------------------------------------------------------------------
 # untar pacakage
+check_package "$ncl_package" "$ncl_shasum"
 if [[ ! -d "$ncl_install_root" ]]; then
     mkdir -p "$ncl_install_root"
 fi

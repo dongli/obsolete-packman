@@ -19,6 +19,7 @@ szip_install_root="$install_root/szip/\$fortran_compiler/2.1"
 szip_bashrc="$install_root/szip/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$szip_package" "$szip_shasum"
 cd "$build_root"
 if [[ ! -d "$szip_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$szip_package"
@@ -38,22 +39,18 @@ $szip_src_root/configure --prefix="$(eval echo $szip_install_root)" \
                          1> "$szip_stdout" 2> "$szip_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure SZIP! See $szip_stderr."
-    exit 1
 fi
 make -j 4 1> "$szip_stdout" 2> "$szip_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make SZIP! See $szip_stderr."
-    exit 1
 fi
 make check 1> "$szip_stdout" 2> "$szip_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check SZIP! See $szip_stderr."
-    exit 1
 fi
 make install 1> "$szip_stdout" 2> "$szip_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install SZIP! See $szip_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

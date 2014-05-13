@@ -19,6 +19,7 @@ source "$PACKMAN_SCRIPTS/bash_utils.sh"
 <name>_bashrc="$install_root/<name>/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$<name>_package" "$<name>_shasum"
 cd "$build_root"
 if [[ ! -d "$<name>_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$<name>_package"
@@ -37,22 +38,18 @@ $<name>_src_root/configure --prefix="$(eval echo $<name>_install_root)" \
                            1> "$<name>_stdout" 2> "$<name>_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure <NAME>! See $<name>_stderr."
-    exit 1
 fi
 make -j 4 1> "$<name>_stdout" 2> "$<name>_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make <NAME>! See $<name>_stderr."
-    exit 1
 fi
 make check 1> "$<name>_stdout" 2> "$<name>_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check <NAME>! See $<name>_stderr."
-    exit 1
 fi
 make install 1> "$<name>_stdout" 2> "$<name>_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install <NAME>! See $<name>_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

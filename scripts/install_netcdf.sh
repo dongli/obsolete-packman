@@ -32,6 +32,9 @@ netcdf_install_root="$install_root/netcdf/\$fortran_compiler/4.3.1.1"
 netcdf_bashrc="$install_root/netcdf/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$netcdf_c_package" "$netcdf_c_shasum"
+check_package "$netcdf_cxx_package" "$netcdf_cxx_shasum"
+check_package "$netcdf_fortran_package" "$netcdf_fortran_shasum"
 cd "$build_root"
 if [[ ! -d "$netcdf_c_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$netcdf_c_package"
@@ -67,22 +70,18 @@ $netcdf_c_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
                              1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NETCDF C interface! See $netcdf_stderr."
-    exit 1
 fi
 make -j 4 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make NETCDF C interface! See $netcdf_stderr."
-    exit 1
 fi
 make check 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check NETCDF C interface! See $netcdf_stderr."
-    exit 1
 fi
 make install 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install NETCDF C interface! See $netcdf_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up
@@ -109,22 +108,18 @@ $netcdf_cxx_src_root/configure --prefix="$(eval echo $netcdf_install_root)" \
     1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NETCDF C++ interface! See $netcdf_stderr."
-    exit 1
 fi
 make -j 4 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make NETCDF C++ interface! See $netcdf_stderr."
-    exit 1
 fi
 make check 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check NETCDF C++ interface! See $netcdf_stderr."
-    exit 1
 fi
 make install 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install NETCDF C++ interface! See $netcdf_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up
@@ -150,22 +145,18 @@ $netcdf_fortran_src_root/configure \
     1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure NETCDF Fortran interface! See $netcdf_stderr."
-    exit 1
 fi
 make -j 4 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make NETCDF Fortran interface! See $netcdf_stderr."
-    exit 1
 fi
 make check 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check NETCDF Fortran interface! See $netcdf_stderr."
-    exit 1
 fi
 make install 1> "$netcdf_stdout" 2> "$netcdf_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install NETCDF Fortran interface! See $netcdf_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

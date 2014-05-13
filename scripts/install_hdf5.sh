@@ -22,6 +22,7 @@ hdf5_install_root="$install_root/hdf5/\$fortran_compiler/1.8.12"
 hdf5_bashrc="$install_root/hdf5/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$hdf5_package" "$hdf5_shasum"
 cd "$build_root"
 if [[ ! -d "$hdf5_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$hdf5_package"
@@ -46,22 +47,18 @@ $hdf5_src_root/configure --prefix="$(eval echo $hdf5_install_root)" \
                          1> "$hdf5_stdout" 2> "$hdf5_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure HDF5! See $hdf5_stderr."
-    exit 1
 fi
 make -j 4 1> "$hdf5_stdout" 2> "$hdf5_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make HDF5! See $hdf5_stderr."
-    exit 1
 fi
 make check 1> "$hdf5_stdout" 2> "$hdf5_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check HDF5! See $hdf5_stderr."
-    exit 1
 fi
 make install 1> "$hdf5_stdout" 2> "$hdf5_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install HDF5! See $hdf5_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

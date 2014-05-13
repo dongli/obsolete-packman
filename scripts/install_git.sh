@@ -19,6 +19,7 @@ git_install_root="$install_root/git/1.9.2"
 git_bashrc="$install_root/git/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$git_package" "$git_shasum"
 cd "$build_root"
 if [[ ! -d "$git_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$git_package"
@@ -33,17 +34,14 @@ temp_notice "See $git_stdout and $git_stderr for output."
             CC=gcc 1> "$git_stdout" 2> "$git_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure GIT! See $git_stderr."
-    exit 1
 fi
 make -j 4 1> "$git_stdout" 2> "$git_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make GIT! See $git_stderr."
-    exit 1
 fi
 make install 1> "$git_stdout" 2> "$git_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install GIT! See $git_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

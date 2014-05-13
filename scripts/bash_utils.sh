@@ -148,3 +148,25 @@ function get_config_entry
     entry_value=$(echo $tmp | cut -d '=' -f 2)
     echo ${entry_value/^ */}
 }
+
+function check_shasum
+{
+    cmd_candidates="shasum sha1sum"
+    for candiate in $(echo $cmd_candidates); do
+        which $candiate 1> /dev/null 2>&1
+        if [[ $? == 0 ]]; then
+            cmd=$candiate
+            break
+        fi
+    done
+    if [[ $cmd == "" ]]; then
+        report_error "No shasum command to use!"
+    fi
+    file=$1
+    expect=$2
+    actual=$($cmd $file | cut -d ' ' -f 1)
+    if [[ $actual != $expect ]]; then
+        return 1
+    fi
+    return 0
+}

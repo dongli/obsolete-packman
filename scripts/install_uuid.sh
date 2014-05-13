@@ -19,6 +19,7 @@ uuid_install_root="$install_root/uuid/1.6.2"
 uuid_bashrc="$install_root/uuid/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
+check_package "$uuid_package" "$uuid_shasum"
 cd "$build_root"
 if [[ ! -d "$uuid_src_root" ]]; then
     tar xf "$PACKMAN_PACKAGES/$uuid_package"
@@ -34,22 +35,18 @@ $uuid_src_root/configure --prefix="$(eval echo $uuid_install_root)" \
                          1> "$uuid_stdout" 2> "$uuid_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure UUID! See $uuid_stderr."
-    exit 1
 fi
 make 1> "$uuid_stdout" 2> "$uuid_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make UUID! See $uuid_stderr."
-    exit 1
 fi
 make check 1> "$uuid_stdout" 2> "$uuid_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to check UUID! See $uuid_stderr."
-    exit 1
 fi
 make install 1> "$uuid_stdout" 2> "$uuid_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install UUID! See $uuid_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up

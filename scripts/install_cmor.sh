@@ -24,6 +24,7 @@ cmor_install_root="$install_root/cmor/\$fortran_compiler/2.9.1"
 cmor_bashrc="$install_root/cmor/bashrc"
 # ------------------------------------------------------------------------------
 # unzip package
+check_package "$cmor_package" "$cmor_shasum"
 cd "$build_root"
 if [[ ! -d "$cmor_src_root" ]]; then
     unzip -qq "$PACKMAN_PACKAGES/$cmor_package"
@@ -43,17 +44,14 @@ $cmor_src_root/configure --prefix="$(eval echo $cmor_install_root)" \
                          1> "$cmor_stdout" 2> "$cmor_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to configure CMOR! See $cmor_stderr."
-    exit 1
 fi
 make -j 4 1> "$cmor_stdout" 2> "$cmor_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to make CMOR! See $cmor_stderr."
-    exit 1
 fi
 make install 1> "$cmor_stdout" 2> "$cmor_stderr"
 if [[ $? != 0 ]]; then
     report_error "Failed to install CMOR! See $cmor_stderr."
-    exit 1
 fi
 # ------------------------------------------------------------------------------
 # clean up
