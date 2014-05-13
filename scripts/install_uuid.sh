@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ uuid_install_root="$install_root/uuid/1.6.2"
 uuid_bashrc="$install_root/uuid/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$uuid_package" "$uuid_shasum"
+check_package "$package_root/$uuid_package" "$uuid_shasum"
 cd "$build_root"
 if [[ ! -d "$uuid_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$uuid_package"
+    tar xf "$package_root/$uuid_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -24,10 +25,10 @@ cmor_install_root="$install_root/cmor/\$fortran_compiler/2.9.1"
 cmor_bashrc="$install_root/cmor/bashrc"
 # ------------------------------------------------------------------------------
 # unzip package
-check_package "$cmor_package" "$cmor_shasum"
+check_package "$package_root/$cmor_package" "$cmor_shasum"
 cd "$build_root"
 if [[ ! -d "$cmor_src_root" ]]; then
-    unzip -qq "$PACKMAN_PACKAGES/$cmor_package"
+    unzip -qq "$package_root/$cmor_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

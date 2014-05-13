@@ -1,14 +1,15 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
-source scripts/bash_utils.sh
+source "$PACKMAN_SCRIPTS/bash_utils.sh"
 # ------------------------------------------------------------------------------
 # dependencies
 source "$install_root/szip/bashrc"
@@ -22,10 +23,10 @@ hdf5_install_root="$install_root/hdf5/\$fortran_compiler/1.8.12"
 hdf5_bashrc="$install_root/hdf5/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$hdf5_package" "$hdf5_shasum"
+check_package "$package_root/$hdf5_package" "$hdf5_shasum"
 cd "$build_root"
 if [[ ! -d "$hdf5_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$hdf5_package"
+    tar xf "$package_root/$hdf5_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

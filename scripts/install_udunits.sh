@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ udunits_install_root="$install_root/udunits/\$fortran_compiler/2.1.24"
 udunits_bashrc="$install_root/udunits/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$udunits_package" "$udunits_shasum"
+check_package "$package_root/$udunits_package" "$udunits_shasum"
 cd "$build_root"
 if [[ ! -d "$udunits_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$udunits_package"
+    tar xf "$package_root/$udunits_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

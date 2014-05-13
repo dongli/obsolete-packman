@@ -13,7 +13,6 @@
 # ------------------------------------------------------------------------------
 
 export PACKMAN_ROOT=$(cd $(dirname $BASH_ARGV) && pwd)
-export PACKMAN_PACKAGES=$PACKMAN_ROOT/packages
 export PACKMAN_SCRIPTS=$PACKMAN_ROOT/scripts
 export PATH=$PACKMAN_ROOT:$PATH
 

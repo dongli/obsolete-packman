@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,12 +20,12 @@ antlr_install_root="$install_root/antlr/2.7.7"
 antlr_bashrc="$install_root/antlr/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$antlr_package" "$antlr_shasum"
+check_package "$package_root/$antlr_package" "$antlr_shasum"
 cd "$build_root"
 if [[ ! -d "$antlr_src_root" ]]; then
     rm -rf "$antlr_src_root"
 fi
-tar xf "$PACKMAN_PACKAGES/$antlr_package"
+tar xf "$package_root/$antlr_package"
 # ------------------------------------------------------------------------------
 # compile package
 cd $antlr_src_root

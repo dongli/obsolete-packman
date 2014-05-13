@@ -6,7 +6,7 @@ function packman_help
 {
     notice "PACKMAN command usage:"
     echo
-    echo -e "- packman $(add_color collect 'bold')"
+    echo -e "- packman $(add_color collect 'bold') <config_file>"
     echo
     echo -e "\tcollect packages from internet"
     echo
@@ -28,9 +28,27 @@ function packman_help
     echo
 }
 
+function create_config_template
+{
+    config_file=$1
+    if [[ ! -f $config_file ]]; then
+cat <<EOF > $config_file
+package_root = <where_is_packages>
+build_root = <where_to_build_packages>
+install_root = <where_to_install>
+c_compiler = gcc
+cxx_compiler = g++
+fortran_compiler = gfortran
+#include_packages = all
+#exclude_packages = none
+EOF
+    fi
+}
+export -f create_config_template
+
 case $1 in
 "collect")
-    "$PACKMAN_SCRIPTS/collect.sh"
+    "$PACKMAN_SCRIPTS/collect.sh" $2
     ;;
 "install")
     "$PACKMAN_SCRIPTS/install.sh" $2

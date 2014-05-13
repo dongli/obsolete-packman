@@ -1,8 +1,9 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
+package_root=$1
+build_root=$2
+install_root=$3
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -37,11 +38,11 @@ ncl_install_root="$install_root/ncl/6.2.0"
 ncl_bashrc="$install_root/ncl/bashrc"
 # ------------------------------------------------------------------------------
 # untar pacakage
-check_package "$ncl_package" "$ncl_shasum"
+check_package "$package_root/$ncl_package" "$ncl_shasum"
 if [[ ! -d "$ncl_install_root" ]]; then
     mkdir -p "$ncl_install_root"
 fi
-tar xf "$PACKMAN_PACKAGES/$ncl_package" -C "$ncl_install_root"
+tar xf "$package_root/$ncl_package" -C "$ncl_install_root"
 # ------------------------------------------------------------------------------
 # export BASH configuration
 cat <<EOF > "$ncl_bashrc"

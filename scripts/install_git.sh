@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ git_install_root="$install_root/git/1.9.2"
 git_bashrc="$install_root/git/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$git_package" "$git_shasum"
+check_package "$package_root/$git_package" "$git_shasum"
 cd "$build_root"
 if [[ ! -d "$git_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$git_package"
+    tar xf "$package_root/$git_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

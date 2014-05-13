@@ -1,3 +1,0 @@
-install_root = /home/user/dongli/tools
-fortran_compiler = gfortran
-include_packages = ncl

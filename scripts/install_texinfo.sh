@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ texinfo_install_root="$install_root/texinfo/5.2"
 texinfo_bashrc="$install_root/texinfo/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$texinfo_package" "$texinfo_shasum"
+check_package "$package_root/$texinfo_package" "$texinfo_shasum"
 cd "$build_root"
 if [[ ! -d "$texinfo_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$texinfo_package"
+    tar xf "$package_root/$texinfo_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

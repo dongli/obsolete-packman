@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ jasper_install_root="$install_root/jasper/\$fortran_compiler/1.900.1"
 jasper_bashrc="$install_root/jasper/bashrc"
 # ------------------------------------------------------------------------------
 # unzip package
-check_package "$jasper_package" "$jasper_shasum"
+check_package "$package_root/$jasper_package" "$jasper_shasum"
 cd "$build_root"
 if [[ ! -d "$jasper_src_root" ]]; then
-    unzip -qq "$PACKMAN_PACKAGES/$jasper_package"
+    unzip -qq "$package_root/$jasper_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

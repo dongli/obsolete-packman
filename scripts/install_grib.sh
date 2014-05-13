@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -23,10 +24,10 @@ grib_install_root="$install_root/grib/\$fortran_compiler/1.12.1"
 grib_bashrc="$install_root/grib/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$grib_package" "$grib_shasum"
+check_package "$package_root/$grib_package" "$grib_shasum"
 cd "$build_root"
 if [[ ! -d "$grib_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$grib_package"
+    tar xf "$package_root/$grib_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

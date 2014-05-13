@@ -33,5 +33,7 @@ for package in $(ls "$install_root"); do
     source "$install_root/$package/bashrc"
 done
 
-notice "You are now in a new BASH session."
+trap "notice 'You are now out of the PACKMAN session.'" EXIT
+
+notice "You are now in a PACKMAN session."
 bash -i

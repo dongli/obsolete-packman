@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ openblas_install_root="$install_root/openblas/\$fortran_compiler/0.2.9.rc2"
 openblas_bashrc="$install_root/openblas/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$openblas_package" "$openblas_shasum"
+check_package "$package_root/$openblas_package" "$openblas_shasum"
 cd "$build_root"
 if [[ ! -d "$openblas_src_root" ]]; then
-    unzip -qq "$PACKMAN_PACKAGES/$openblas_package"
+    unzip -qq "$package_root/$openblas_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,11 +20,11 @@ lapack_install_root="$install_root/lapack/\$fortran_compiler/3.5.0"
 lapack_bashrc="$install_root/lapack/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$lapack_package" "$lapack_shasum"
+check_package "$package_root/$lapack_package" "$lapack_shasum"
 exit
 cd "$build_root"
 if [[ ! -d "$lapack_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$lapack_package"
+    tar xf "$package_root/$lapack_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

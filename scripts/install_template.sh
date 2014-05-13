@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ source "$PACKMAN_SCRIPTS/bash_utils.sh"
 <name>_bashrc="$install_root/<name>/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$<name>_package" "$<name>_shasum"
+check_package "$package_root/$<name>_package" "$<name>_shasum"
 cd "$build_root"
 if [[ ! -d "$<name>_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$<name>_package"
+    tar xf "$package_root/$<name>_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

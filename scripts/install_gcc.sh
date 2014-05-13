@@ -1,8 +1,9 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
+package_root=$1
+build_root=$2
+install_root=$3
 # ------------------------------------------------------------------------------
 # internal script library
 source scripts/bash_utils.sh
@@ -28,25 +29,25 @@ mpc_package="mpc-0.8.1.tar.gz"
 mpc_src_root="$build_root/mpc-0.8.1"
 # ------------------------------------------------------------------------------
 # untar packages
-check_package "$gcc_package" "$gcc_shasum"
-check_package "$gmp_package" "$gmp_shasum"
-check_package "$mpfr_package" "$mpfr_shasum"
-check_package "$mpc_package" "$mpc_shasum"
+check_package "$package_root/$gcc_package" "$gcc_shasum"
+check_package "$package_root/$gmp_package" "$gmp_shasum"
+check_package "$package_root/$mpfr_package" "$mpfr_shasum"
+check_package "$package_root/$mpc_package" "$mpc_shasum"
 cd "$build_root"
 if [[ ! -d "$gcc_src_root" ]]; then
     temp_notice "Untar $gcc_package ..."
-    tar xf "$PACKMAN_PACKAGES/$gcc_package"
+    tar xf "$package_root/$gcc_package"
     erase_temp_notice
     temp_notice "Untar $gmp_package ..."
-    tar xf "$PACKMAN_PACKAGES/$gmp_package"
+    tar xf "$package_root/$gmp_package"
     ln -s "$gmp_src_root" "$gcc_src_root/gmp"
     erase_temp_notice
     temp_notice "Untar $mpfr_package ..."
-    tar xf "$PACKMAN_PACKAGES/$mpfr_package"
+    tar xf "$package_root/$mpfr_package"
     ln -s "$mpfr_src_root" "$gcc_src_root/mpfr"
     erase_temp_notice
     temp_notice "Untar $mpc_package ..."
-    tar xf "$PACKMAN_PACKAGES/$mpc_package"
+    tar xf "$package_root/$mpc_package"
     ln -s "$mpc_src_root" "$gcc_src_root/mpc"
     erase_temp_notice
 fi

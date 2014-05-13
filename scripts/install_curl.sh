@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ curl_install_root="$install_root/curl/7.36.0"
 curl_bashrc="$install_root/curl/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$curl_package" "$curl_shasum"
+check_package "$package_root/$curl_package" "$curl_shasum"
 cd "$build_root"
 if [[ ! -d "$curl_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$curl_package"
+    tar xf "$package_root/$curl_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

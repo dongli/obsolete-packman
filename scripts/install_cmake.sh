@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -19,10 +20,10 @@ cmake_install_root="$install_root/cmake/2.8.12.2"
 cmake_bashrc="$install_root/cmake/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$cmake_package" "$cmake_shasum"
+check_package "$package_root/$cmake_package" "$cmake_shasum"
 cd "$build_root"
 if [[ ! -d "$cmake_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$cmake_package"
+    tar xf "$package_root/$cmake_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

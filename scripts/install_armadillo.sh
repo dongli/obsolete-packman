@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -21,12 +22,12 @@ armadillo_install_root="$install_root/armadillo/4.100.2"
 armadillo_bashrc="$install_root/armadillo/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$armadillo_package" "$armadillo_shasum"
+check_package "$package_root/$armadillo_package" "$armadillo_shasum"
 cd "$build_root"
 if [[ -d "$armadillo_src_root" ]]; then
     rm -rf "$armadillo_src_root"
 fi
-tar xf "$PACKMAN_PACKAGES/$armadillo_package"
+tar xf "$package_root/$armadillo_package"
 # fix a cmake bug
 perl -pi -e 's/$/ $ENV{OPENBLAS_ROOT}\/lib/ if $. == 11' \
     "$armadillo_src_root/build_aux/cmake/Modules/ARMA_FindOpenBLAS.cmake"

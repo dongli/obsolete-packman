@@ -1,11 +1,12 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
@@ -32,18 +33,18 @@ netcdf_install_root="$install_root/netcdf/\$fortran_compiler/4.3.1.1"
 netcdf_bashrc="$install_root/netcdf/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$netcdf_c_package" "$netcdf_c_shasum"
-check_package "$netcdf_cxx_package" "$netcdf_cxx_shasum"
-check_package "$netcdf_fortran_package" "$netcdf_fortran_shasum"
+check_package "$package_root/$netcdf_c_package" "$netcdf_c_shasum"
+check_package "$package_root/$netcdf_cxx_package" "$netcdf_cxx_shasum"
+check_package "$package_root/$netcdf_fortran_package" "$netcdf_fortran_shasum"
 cd "$build_root"
 if [[ ! -d "$netcdf_c_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$netcdf_c_package"
+    tar xf "$package_root/$netcdf_c_package"
 fi
 if [[ ! -d "$netcdf_cxx_src_root" ]]; then
-    unzip -qq "$PACKMAN_PACKAGES/$netcdf_cxx_package"
+    unzip -qq "$package_root/$netcdf_cxx_package"
 fi
 if [[ ! -d "$netcdf_fortran_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$netcdf_fortran_package"
+    tar xf "$package_root/$netcdf_fortran_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

@@ -1,14 +1,15 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
 # arguments
-build_root=$1
-install_root=$2
-fortran_compiler=$3
-cxx_compiler=$4
-c_compiler=$5
+package_root=$1
+build_root=$2
+install_root=$3
+fortran_compiler=$4
+cxx_compiler=$5
+c_compiler=$6
 # ------------------------------------------------------------------------------
 # internal script library
-source scripts/bash_utils.sh
+source "$PACKMAN_SCRIPTS/bash_utils.sh"
 # ------------------------------------------------------------------------------
 # some pacakage parameters
 szip_url="http://www.hdfgroup.org/ftp/lib-external/szip/2.1/src/szip-2.1.tar.gz"
@@ -19,10 +20,10 @@ szip_install_root="$install_root/szip/\$fortran_compiler/2.1"
 szip_bashrc="$install_root/szip/bashrc"
 # ------------------------------------------------------------------------------
 # untar package
-check_package "$szip_package" "$szip_shasum"
+check_package "$package_root/$szip_package" "$szip_shasum"
 cd "$build_root"
 if [[ ! -d "$szip_src_root" ]]; then
-    tar xf "$PACKMAN_PACKAGES/$szip_package"
+    tar xf "$package_root/$szip_package"
 fi
 # ------------------------------------------------------------------------------
 # compile package

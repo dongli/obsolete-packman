@@ -12,18 +12,26 @@
 # ------------------------------------------------------------------------------
 
 source "$PACKMAN_SCRIPTS/bash_utils.sh"
-
-if [[ ! -d "$PACKMAN_PACKAGES" ]]; then
-    mkdir "$PACKMAN_PACKAGES"
+# ------------------------------------------------------------------------------
+# check configuration file
+if [[ -z "$1" ]]; then
+    create_config_template "config.txt"
+    notice "PACKMAN needs your instruction to install packages. Please fill in the $config_file."
+    exit
 fi
-cd "$PACKMAN_PACKAGES"
-
-if [[ $(get_os_type) == "Linux" ]]; then
-    shasum_cmd=sha1sum
-elif [[ $(get_os_type) == "Darwin" ]]; then
-    shasum_cmd=shasum
+config_file=$1
+check_file_existence "$config_file"
+# ------------------------------------------------------------------------------
+# parse configuration file
+package_root=$(get_config_entry "$config_file" "package_root" "packman-packages")
+# ------------------------------------------------------------------------------
+# create package root if necessary
+if [[ ! -d "$package_root" ]]; then
+    mkdir "$package_root"
 fi
-
+# ------------------------------------------------------------------------------
+# download packages from internet
+cd "$package_root"
 for file in $(ls $PACKMAN_SCRIPTS/install_*.sh); do
     i=0
     for tmp in $(echo $(grep '_url=' $file)); do
@@ -44,9 +52,8 @@ for file in $(ls $PACKMAN_SCRIPTS/install_*.sh); do
         i=$((i+1))
     done
     for (( i = 0; i < ${#urls[@]}; ++i )); do
-        if [[ -f "$PACKMAN_PACKAGES/${packages[$i]}" ]]; then
-            shasum=$($shasum_cmd "$PACKMAN_PACKAGES/${packages[$i]}" | cut -d ' ' -f 1)
-            if [[ $shasum == ${shasums[$i]} ]]; then
+        if [[ -f "$package_root/${packages[$i]}" ]]; then
+            if check_shasum "$package_root/${packages[$i]}" "${shasums[$i]}"; then
                 notice "Package $(add_color ${packages[$i]} 'bold magenta') has already downloaded."
                 continue
             else
