@@ -30,6 +30,11 @@ fi
 config_file=$1
 check_file_existence "$config_file"
 # ------------------------------------------------------------------------------
+# check if packages have been collected
+if [[ ! -d "$PACKMAN_PACKAGES" ]]; then
+    report_error "Packages has not been collected! Run 'packman collect'."
+fi
+# ------------------------------------------------------------------------------
 # parse configuration file
 include_packages=$(get_config_entry "$config_file" "include_packages" "all")
 exclude_packages=$(get_config_entry "$config_file" "exclude_packages" "none")
@@ -74,8 +79,8 @@ for package in $(cat "$PACKMAN_SCRIPTS/install_order.txt"); do
     fi
     notice "Install package $(add_color $package 'green bold') ..."
     bash "scripts/install_$package.sh" \
-        "$build_root" "$install_root" \
-        "$fortran_compiler" "$cxx_compiler" "$c_compiler"
+         "$build_root" "$install_root" \
+         "$fortran_compiler" "$cxx_compiler" "$c_compiler"
     source "$install_root/$package/bashrc"
 done
 # ------------------------------------------------------------------------------
