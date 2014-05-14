@@ -23,7 +23,8 @@ config_file=$1
 check_file_existence "$config_file"
 # ------------------------------------------------------------------------------
 # parse configuration file
-package_root=$(get_config_entry "$config_file" "package_root" "packman-packages")
+package_root=$(get_config_entry "$config_file" "package_root" "./packman-packages")
+notice "Download packages into $(add_color $package_root 'bold')."
 # ------------------------------------------------------------------------------
 # create package root if necessary
 if [[ ! -d "$package_root" ]]; then
@@ -52,8 +53,8 @@ for file in $(ls $PACKMAN_SCRIPTS/install_*.sh); do
         i=$((i+1))
     done
     for (( i = 0; i < ${#urls[@]}; ++i )); do
-        if [[ -f "$package_root/${packages[$i]}" ]]; then
-            if check_shasum "$package_root/${packages[$i]}" "${shasums[$i]}"; then
+        if [[ -f "${packages[$i]}" ]]; then
+            if check_shasum "${packages[$i]}" "${shasums[$i]}"; then
                 notice "Package $(add_color ${packages[$i]} 'bold magenta') has already downloaded."
                 continue
             else
