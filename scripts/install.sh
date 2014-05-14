@@ -23,11 +23,14 @@ config_file=$1
 check_file_existence "$config_file"
 # ------------------------------------------------------------------------------
 # parse configuration file
-package_root=$(get_config_entry "$config_file" "package_root" "$(pwd)/packman-packages")
+package_root=$(get_config_entry "$config_file" "package_root" "packman-packages")
+package_root=$(get_absolute_path "$package_root")
 notice "Packages are in $(add_color $package_root 'bold')."
-build_root=$(get_config_entry "$config_file" "build_root" "$(pwd)/packman-build")
+build_root=$(get_config_entry "$config_file" "build_root" "packman-build")
+build_root=$(get_absolute_path "$build_root")
 notice "Build packages in $(add_color $build_root 'bold')."
 install_root=$(get_config_entry "$config_file" "install_root")
+install_root=$(get_absolute_path "$install_root")
 notice "Install packages in $(add_color $install_root 'bold')."
 c_compiler=$(get_config_entry "$config_file" "c_compiler" "gcc")
 notice "C compiler is $(add_color $c_compiler 'bold')"
@@ -36,9 +39,9 @@ notice "C++ compiler is $(add_color $cxx_compiler 'bold')"
 fortran_compiler=$(get_config_entry "$config_file" "fortran_compiler" "gfortran")
 notice "Fortran compiler is $(add_color $fortran_compiler 'bold')"
 include_packages=$(get_config_entry "$config_file" "include_packages" "all")
-notice "Included packages are $(add_color $include_packages 'bold')"
+notice "Included packages are $(add_color "$include_packages" 'bold')"
 exclude_packages=$(get_config_entry "$config_file" "exclude_packages" "none")
-notice "Excluded packages are $(add_color $exclude_packages 'bold')"
+notice "Excluded packages are $(add_color "$exclude_packages" 'bold')"
 if [[ "$include_packages" != "all" && "$exclude_packages" != "none" ]]; then
     report_error "Parameter $(add_color include_packages 'bold') and $(add_color exclude_packages 'bold') can not be set at the same time!"
 fi

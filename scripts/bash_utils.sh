@@ -41,6 +41,11 @@ function get_linux_type
     fi
 }
 
+function get_absolute_path
+{
+    echo "$(cd "$(dirname "$1")" ; pwd -P )/$(basename "$1")"
+}
+
 function notice
 {
     message=$1
