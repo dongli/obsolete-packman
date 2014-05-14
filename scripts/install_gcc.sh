@@ -6,7 +6,7 @@ build_root=$2
 install_root=$3
 # ------------------------------------------------------------------------------
 # internal script library
-source scripts/bash_utils.sh
+source "$PACKMAN_SCRIPTS/bash_utils.sh"
 # ------------------------------------------------------------------------------
 # some pacakage parameters
 gcc_url="ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.8.2/gcc-4.8.2.tar.bz2"
