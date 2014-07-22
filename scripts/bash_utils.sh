@@ -43,7 +43,9 @@ function get_linux_type
 
 function get_absolute_path
 {
-    echo "$(cd "$(dirname "$1")" ; pwd -P )/$(basename "$1")"
+    # Expand tilde to HOME to avoid problems
+    path=$(echo $1 | perl -ne "s;^~;$HOME; and print")
+    echo "$(cd "$(dirname "$path")" ; pwd -P )/$(basename "$path")"
 }
 
 function notice

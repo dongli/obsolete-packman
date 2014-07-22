@@ -24,6 +24,7 @@ check_file_existence "$config_file"
 # ------------------------------------------------------------------------------
 # parse configuration file
 package_root=$(get_config_entry "$config_file" "package_root" "./packman-packages")
+package_root=$(get_absolute_path $package_root)
 notice "Download packages into $(add_color $package_root 'bold')."
 # ------------------------------------------------------------------------------
 # create package root if necessary
