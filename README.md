@@ -1,3 +1,9 @@
+Notice
+======
+
+I am going to redesign `packman` by using `Ruby` language which is more
+powerful. The usage should be not changed or be easier.
+
 Introduction
 ============
 
